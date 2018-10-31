@@ -59,6 +59,7 @@ public class ExperiencesService {
      * @return
      */
     public String addOne(Experience experience) {
+        // TODO: HANDLE ADDING THE SAME EXPERIENCE
         DBCollection dbCollection = MongoFactory.getCollection(dbName, collectionName);
         try {
             BasicDBObject newComp = new BasicDBObject();
@@ -86,6 +87,7 @@ public class ExperiencesService {
      * @return
      */
     public String editOne(String id, Experience experience) {
+        // TODO: CAN I DO PARTIAL UPDATE MORE NEAT?
         try {
             DBCollection coll = MongoFactory.getCollection(dbName, collectionName);
             DBObject existing = MongoFactory.getDBObjectById(dbName, collectionName, id);
