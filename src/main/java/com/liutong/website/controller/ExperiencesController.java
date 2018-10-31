@@ -2,7 +2,6 @@ package com.liutong.website.controller;
 
 import com.liutong.website.entities.experiences.Experience;
 import com.liutong.website.services.ExperiencesService;
-import com.mongodb.DBObject;
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,7 @@ public class ExperiencesController {
 
     @PostMapping
     public ResponseEntity<?> createExperience(@RequestBody Experience experience) {
-        // TODO: HOW TO RETURN THE NEW URL?
+        // TODO: HOW TO RETURN THE NEW URL? Aadd error handling.
         String id = experiencesService.addOne(experience);
         return ResponseEntity.ok(id);
     }
@@ -39,4 +38,11 @@ public class ExperiencesController {
         String editedId = experiencesService.editOne(id, experience);
         return ResponseEntity.ok(editedId);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteExperience(@PathVariable String id) {
+        experiencesService.deleteOne(id);
+        return ResponseEntity.ok("Delete Success");
+    }
+
 }

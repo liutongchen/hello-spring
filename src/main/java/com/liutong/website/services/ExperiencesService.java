@@ -123,4 +123,14 @@ public class ExperiencesService {
             return null;
         }
     }
+
+    public void deleteOne(String id) {
+        try {
+            DBCollection coll = MongoFactory.getCollection(dbName, collectionName);
+            DBObject item = MongoFactory.getDBObjectById(dbName, collectionName, id);
+            coll.remove(item);
+        } catch (Error e) {
+             log.error(e);
+        }
+    }
 }
