@@ -1,4 +1,4 @@
-package portfolio;
+package com.liutong.website.entities.experiences;
 
 import org.springframework.data.annotation.Id;
 
@@ -8,6 +8,10 @@ public class Experience {
     private String title;
     private String jobDescription; // TODO: Think about how to represent this later: maybe a list?
     private String techUsed; // TODO: Think about how to represent this later: maybe a list?
+
+    public void setId(String id) { this.id = id; }
+
+    public String getId() { return id; }
 
     public Company getCompany() {
         return company;

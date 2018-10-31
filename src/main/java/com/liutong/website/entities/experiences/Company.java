@@ -1,4 +1,4 @@
-package portfolio;
+package com.liutong.website.entities.experiences;
 
 import java.net.URL;
 
