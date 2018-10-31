@@ -1,10 +1,8 @@
 package com.liutong.website.factory;
 
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
-import com.mongodb.MongoException;
+import com.mongodb.*;
 import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
 @SuppressWarnings("deprecation")
@@ -33,4 +31,10 @@ public class MongoFactory {
         return getDB(dbName).getCollection(collectionName);
     }
 
+    public static DBObject getDBObjectById(String dbName, String collectionName, String id) {
+        DBCollection coll = getCollection(dbName, collectionName);
+        DBObject query = new BasicDBObject();
+        query.put("_id", new ObjectId(id));
+        return coll.findOne(query);
+    }
 }

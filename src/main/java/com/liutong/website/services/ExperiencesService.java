@@ -59,7 +59,6 @@ public class ExperiencesService {
      * @return
      */
     public String addOne(Experience experience) {
-        // TODO: ASSUMING ID IS AUTO CREATED HERE, SHOULD RETURN THE NEW OBJECT OR JUST THE ID?
         DBCollection dbCollection = MongoFactory.getCollection(dbName, collectionName);
         try {
             BasicDBObject newComp = new BasicDBObject();
@@ -75,6 +74,50 @@ public class ExperiencesService {
 
             dbCollection.insert(newExp);
             return newExp.get("_id").toString();
+        } catch(Error e) {
+            log.error(e);
+            return null;
+        }
+    }
+
+    /**
+     * Update the selected experience.
+     * @param experience
+     * @return
+     */
+    public String editOne(String id, Experience experience) {
+        try {
+            DBCollection coll = MongoFactory.getCollection(dbName, collectionName);
+            DBObject existing = MongoFactory.getDBObjectById(dbName, collectionName, id);
+            BasicDBObject editedExp = new BasicDBObject();
+
+            BasicDBObject editedComp = new BasicDBObject();
+            if (experience.getCompany() != null) {
+                editedComp.put("name", experience.getCompany().getName());
+                editedComp.put("iconLink", experience.getCompany().getIconLink());
+                editedComp.put("infoLink", experience.getCompany().getInfoLink());
+            } else {
+                editedComp.put("name", ((DBObject)existing.get("company")).get("name").toString());
+                editedComp.put("iconLink", ((DBObject)existing.get("company")).get("iconLink").toString());
+                editedComp.put("infoLink", ((DBObject)existing.get("company")).get("infoLink").toString());
+            }
+            String jd = experience.getJobDescription() != null ?
+                    experience.getJobDescription()
+                    : existing.get("jobDescription").toString();
+            String title = experience.getTitle() != null ?
+                    experience.getTitle() :
+                    existing.get("title").toString();
+            String techUsed = experience.getTechUsed() != null ?
+                    experience.getTechUsed() :
+                    existing.get("techUsed").toString();
+
+            editedExp.put("company", editedComp);
+            editedExp.put("title", title);
+            editedExp.put("jobDescription", jd);
+            editedExp.put("techUsed", techUsed);
+
+            coll.update(existing, editedExp);
+            return id;
         } catch(Error e) {
             log.error(e);
             return null;
