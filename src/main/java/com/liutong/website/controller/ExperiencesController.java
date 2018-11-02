@@ -21,8 +21,8 @@ public class ExperiencesController {
      * Display all experiences
      */
     @GetMapping
-    public List<Experience> listExperiences() {
-        return experiencesService.getAll();
+    public ResponseEntity<List<Experience>> listExperiences() {
+        return ResponseEntity.ok(experiencesService.getAll());
     }
 
 
